@@ -6,15 +6,15 @@ Config = {
 
     -- The number value here (30) is the blip colour, use the blip data link below to find out what number = what colour.
     departments = {
-        ['LPSD'] = {30},
-        ['BCSO'] = {30},
-        ['SAHP'] = {30},
-        ['SAFR'] = {30},
+        ['LSPD'] = {'LSPD |', 30},
+        ['BCSO'] = {'BCSO |', 58},
+        ['SAHP'] = {'SAHP |', 40},
+        ['SAFR'] = {'SAFR |', 76},
     },
 
     -- BLIP SETTINGS --
     -- Blip data https://docs.fivem.net/docs/game-references/blips/ -- 
-    blipcone = true,
+    blipcone = false,
     HeadingIndicator = true,
     blipscale = 1.0,
     leofootblip = 1,
@@ -23,5 +23,5 @@ Config = {
     motorcycleblip = 226,
     planeblip = 423,
     vehicleblip = 227,
-    blipcategory = 7, -- 1 = No distance shown in legend | 2 = Distance shown in legend | 7 = "Other Players" category, also shows distance in legend
+    blipcategory = 2, -- 1 = No distance shown in legend | 2 = Distance shown in legend | 7 = "Other Players" category, also shows distance in legend
 }

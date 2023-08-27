@@ -34,6 +34,7 @@ function RemoveAnyExistingEmergencyBlips()
         local b = currentBlips[i]
         if b and DoesBlipExist(b) then
             RemoveBlip(b)
+            Citizen.Wait(1)
         end
         table.remove(currentBlips, i)
     end
@@ -54,7 +55,7 @@ function RefreshBlips(activeEmergencyPersonnel, leo_job)
             SetBlipShrink(blip, true)
             SetBlipPriority(blip, 10)
             --print(leo_job)
-            SetBlipColour(blip, Config.departments[leo_job][1])
+            SetBlipColour(blip, Config.departments[leo_job][2])
             SetBlipAsShortRange(blip, true)
             SetBlipDisplay(blip, 6)
             --SetBlipAsFriendly(blip, true)
@@ -67,7 +68,7 @@ function RefreshBlips(activeEmergencyPersonnel, leo_job)
 
             BeginTextCommandSetBlipName("STRING")
             if Config.UseCharName then 
-                AddTextComponentString(cname.firstName .. " " .. cname.lastName)
+                AddTextComponentString(Config.departments[leo_job][1] .. " " .. cname.firstName .. " " .. cname.lastName)
             else 
                 AddTextComponentString(info.name)
             end
