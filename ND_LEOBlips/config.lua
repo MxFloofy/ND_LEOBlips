@@ -3,18 +3,19 @@ Config = {
     UseCharName = true, -- If false will use fivem/steam name
     show_officer_on_foot = true, -- If false will only show when in vehicle
     autoenable_blips = true, -- If set true every 15 seconds it will check players jobs to see if they are in one of the departments below. /blip off will not work if using this (as of now)
+
+    -- The number value here (30) is the blip colour, use the blip data link below to find out what number = what colour.
     departments = {
-        "LSPD",
-        "BSCO",
-        "SAFR",
-        "SAHP"
+        ['LPSD'] = {30},
+        ['BCSO'] = {30},
+        ['SAHP'] = {30},
+        ['SAFR'] = {30},
     },
 
     -- BLIP SETTINGS --
     -- Blip data https://docs.fivem.net/docs/game-references/blips/ -- 
     blipcone = true,
     HeadingIndicator = true,
-    blipcolor = 30,
     blipscale = 1.0,
     leofootblip = 1,
     helicopterblip = 64,

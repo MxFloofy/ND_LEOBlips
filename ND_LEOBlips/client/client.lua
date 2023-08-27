@@ -13,10 +13,10 @@ if Config.enable_blips then
     end)
 
     RegisterNetEvent("MxDev:UPDATEBLIPS")
-    AddEventHandler("MxDev:UPDATEBLIPS", function(activeEmergencyPersonnel)
+    AddEventHandler("MxDev:UPDATEBLIPS", function(activeEmergencyPersonnel, leo_job)
         if blip_status then
             RemoveAnyExistingEmergencyBlips()
-            RefreshBlips(activeEmergencyPersonnel)
+            RefreshBlips(activeEmergencyPersonnel, leo_job)
         end
     end)
 end
@@ -40,7 +40,7 @@ function RemoveAnyExistingEmergencyBlips()
 end
 
 
-function RefreshBlips(activeEmergencyPersonnel)
+function RefreshBlips(activeEmergencyPersonnel, leo_job)
     for src, info in pairs(activeEmergencyPersonnel) do
         if src ~= myServerId and info and info.coords then
             local playerIdx = GetPlayerFromServerId(src)
@@ -53,7 +53,8 @@ function RefreshBlips(activeEmergencyPersonnel)
             SetBlipCategory(blip, Config.blipcategory)
             SetBlipShrink(blip, true)
             SetBlipPriority(blip, 10)
-            SetBlipColour(blip, Config.blipcolor)
+            --print(leo_job)
+            SetBlipColour(blip, Config.departments[leo_job][1])
             SetBlipAsShortRange(blip, true)
             SetBlipDisplay(blip, 6)
             --SetBlipAsFriendly(blip, true)

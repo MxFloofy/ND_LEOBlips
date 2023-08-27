@@ -11,9 +11,9 @@ if Config.enable_blips then
         local player_name = GetPlayerName(source)
         local character = NDCore.Functions.GetPlayer(source)
         
-        for _, department in pairs(Config.departments) do
+        for department, _ in pairs(Config.departments) do
             if character.job == department then
-                local player_info = { name = player_name, src = source }
+                local player_info = { name = player_name, src = source, dept = character.job }
 
                 if status == "on" then
                     if active_leo[source] then
@@ -59,14 +59,16 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(3000)
         for id, info in pairs(active_leo) do
+            leo_job = active_leo[id].dept
+            --print(leo_job)
             active_leo[id].coords = GetEntityCoords(GetPlayerPed(id))
-            TriggerClientEvent("MxDev:UPDATEBLIPS", id, active_leo)
+            TriggerClientEvent("MxDev:UPDATEBLIPS", id, active_leo, leo_job)
         end
         for src, info in pairs(active_leo) do 
             local character = NDCore.Functions.GetPlayer(src)
             local jobMatches = false
             
-            for _, department in pairs(Config.departments) do
+            for department, _ in pairs(Config.departments) do
                 if character.job == department then
                     jobMatches = true
                     break
@@ -85,9 +87,9 @@ AddEventHandler('MxDev:AUTOBLIP', function(source)
     src = source
     local character = NDCore.Functions.GetPlayer(src)
     
-    for _, department in pairs(Config.departments) do
+    for department, _ in pairs(Config.departments) do
         if character.job == department and not active_leo[src] then
-            local player_info = { name = GetPlayerName(source), src = source }
+            local player_info = { name = GetPlayerName(source), src = source, dept = character.job }
             TriggerEvent('MxDev:ADDBLIP', player_info)
             break
         end
