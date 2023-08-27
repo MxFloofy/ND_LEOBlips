@@ -4,10 +4,10 @@ Config = {
     show_officer_on_foot = true, -- If false will only show when in vehicle
     autoenable_blips = true, -- If set true every 15 seconds it will check players jobs to see if they are in one of the departments below. /blip off will not work if using this (as of now)
     departments = {
-        "MPDC",
-        "FBI",
-        "USSS",
-        "DCFEMS"
+        "LSPD",
+        "BSCO",
+        "SAFR",
+        "SAHP"
     },
 
     -- BLIP SETTINGS --
