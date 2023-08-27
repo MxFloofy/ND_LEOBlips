@@ -16,6 +16,7 @@ Config = {
     -- Blip data https://docs.fivem.net/docs/game-references/blips/ -- 
     blipcone = false,
     HeadingIndicator = true,
+    blipnearby = false, -- Set to true if you want blips to only show up when nearby
     blipscale = 1.0,
     leofootblip = 1,
     helicopterblip = 64,
