@@ -13,7 +13,7 @@ if Config.enable_blips then
         
         for department, _ in pairs(Config.departments) do
             if character.job == department then
-                local player_info = { name = player_name, src = source, dept = character.job }
+                local player_info = { name = player_name, src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
 
                 if status == "on" then
                     if active_leo[source] then
@@ -89,7 +89,7 @@ AddEventHandler('MxDev:AUTOBLIP', function(source)
     
     for department, _ in pairs(Config.departments) do
         if character.job == department and not active_leo[src] then
-            local player_info = { name = GetPlayerName(source), src = source, dept = character.job }
+            local player_info = { name = GetPlayerName(source), src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
             TriggerEvent('MxDev:ADDBLIP', player_info)
             break
         end

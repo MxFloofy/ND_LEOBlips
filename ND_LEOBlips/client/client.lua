@@ -56,7 +56,7 @@ function RefreshBlips(activeEmergencyPersonnel, leo_job)
             SetBlipPriority(blip, 10)
             --print(leo_job)
             SetBlipColour(blip, Config.departments[leo_job][2])
-            SetBlipAsShortRange(blip, true)
+            SetBlipAsShortRange(blip, Config.blipnearby)
             SetBlipDisplay(blip, 6)
             --SetBlipAsFriendly(blip, true)
             SetBlipShowCone(blip, Config.blipcone)
@@ -64,7 +64,7 @@ function RefreshBlips(activeEmergencyPersonnel, leo_job)
             ShowHeadingIndicatorOnBlip(blip, Config.HeadingIndicator)
             SetBlipRotation(blip, heading)
             
-            local cname = NDCore.Functions.GetSelectedCharacter()
+            local cname = info.cname
 
             BeginTextCommandSetBlipName("STRING")
             if Config.UseCharName then 
