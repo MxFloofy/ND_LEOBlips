@@ -1,7 +1,7 @@
 Config = {
-    enable_blips = true,
+    enable_blips = true, -- If autoenable_blips is off you must use "/blip on" or "/blip off" to enable/disable the blips
     show_officer_on_foot = true,
-    autoenable_blips = true,
+    autoenable_blips = true, -- If set true every 15 seconds it will check players jobs to see if they are in one of the departments below. /blip off will not work if using this (as of now)
     departments = {
         "LSPD",
         "BSCO",
