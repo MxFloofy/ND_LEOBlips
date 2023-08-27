@@ -1,3 +1,4 @@
+NDCore = exports["ND_Core"]:GetCoreObject()
 local currentBlips = {}
 
 if Config.enable_blips then
@@ -15,7 +16,6 @@ if Config.enable_blips then
     AddEventHandler("MxDev:UPDATEBLIPS", function(activeEmergencyPersonnel)
         if blip_status then
             RemoveAnyExistingEmergencyBlips()
-            Citizen.Wait(0)
             RefreshBlips(activeEmergencyPersonnel)
         end
     end)
@@ -50,7 +50,7 @@ function RefreshBlips(activeEmergencyPersonnel)
             local blip = AddBlipForEntity(ped)
             SetBlipScale(blip, Config.blipscale)
             SetBlipSprite(blip, blipType)
-            SetBlipCategory(blip, 7)
+            SetBlipCategory(blip, Config.blipcategory)
             SetBlipShrink(blip, true)
             SetBlipPriority(blip, 10)
             SetBlipColour(blip, Config.blipcolor)
@@ -62,8 +62,14 @@ function RefreshBlips(activeEmergencyPersonnel)
             ShowHeadingIndicatorOnBlip(blip, Config.HeadingIndicator)
             SetBlipRotation(blip, heading)
             
+            local cname = NDCore.Functions.GetSelectedCharacter()
+
             BeginTextCommandSetBlipName("STRING")
-            AddTextComponentString(info.name)
+            if Config.UseCharName then 
+                AddTextComponentString(cname.firstName .. " " .. cname.lastName)
+            else 
+                AddTextComponentString(info.name)
+            end
             EndTextCommandSetBlipName(blip)
             
             table.insert(currentBlips, blip)
