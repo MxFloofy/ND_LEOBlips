@@ -68,7 +68,7 @@ function RefreshBlips(activeEmergencyPersonnel, leo_job)
 
             BeginTextCommandSetBlipName("STRING")
             if Config.UseCharName then 
-                AddTextComponentString(Config.departments[leo_job][1] .. " " .. cname.firstName .. " " .. cname.lastName)
+                AddTextComponentString(Config.departments[info.dept][1] .. " " .. cname.firstName .. " " .. cname.lastName)
             else 
                 AddTextComponentString(info.name)
             end

@@ -46,6 +46,7 @@ end)
 RegisterNetEvent("MxDev:ADDBLIP")
 AddEventHandler("MxDev:ADDBLIP", function(player)
     active_leo[player.src] = player
+    --print(active_leo[src].dept)
     TriggerClientEvent("MxDev:TOGGLELEOBLIP", player.src, true)
 end)
 
@@ -89,6 +90,10 @@ AddEventHandler('MxDev:AUTOBLIP', function(source)
     
     for department, _ in pairs(Config.departments) do
         if character.job == department and not active_leo[src] then
+            local player_info = { name = GetPlayerName(source), src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
+            TriggerEvent('MxDev:ADDBLIP', player_info)
+            break
+        elseif active_leo[src] and character.job ~= active_leo[src].dept then
             local player_info = { name = GetPlayerName(source), src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
             TriggerEvent('MxDev:ADDBLIP', player_info)
             break
