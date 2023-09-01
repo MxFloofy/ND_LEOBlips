@@ -8,5 +8,5 @@ The script has lots of customization so you can make it fit your server.
 2. Add ensure ND_LEOBlips to your server.cfg
 3. Edit the config.lua to your liking
 
-## Support
+## Support 
 https://discord.gg/fbNqxcgfV5
