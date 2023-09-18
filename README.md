@@ -51,3 +51,6 @@ The script allows you to customize various blip settings:
 - The blip system supports automatic blip updates every 15 seconds (if `autoenable_blips` is `true`), and manual toggling using the `/blip` chat command.
 
 For more information about the blip settings and how to use this script, refer to the script comments and documentation provided in the Lua script file (`client.lua | config.lua`).
+
+
+### Special Thanks To https://github.com/TheStoicBear for keeping this up and updating it while my github was down
