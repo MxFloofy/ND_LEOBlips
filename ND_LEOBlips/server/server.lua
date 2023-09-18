@@ -1,7 +1,12 @@
+-- Import the ND_Core module
 NDCore = exports["ND_Core"]:GetCoreObject()
+
+-- Create a table to store active law enforcement officers with blips
 local active_leo = {}
 
+-- Check if blips are enabled in the configuration
 if Config.enable_blips then
+    -- Register the 'blip' chat command to toggle blip status
     RegisterCommand('blip', function(source, args, message)
         local status = args[1]
         if not status then
@@ -11,23 +16,24 @@ if Config.enable_blips then
         local player_name = GetPlayerName(source)
         local character = NDCore.Functions.GetPlayer(source)
         
+        -- Check if the player's job matches any department
         for department, _ in pairs(Config.departments) do
             if character.job == department then
-                local player_info = { name = player_name, src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
+                local player_info = { name = player_name, src = source, dept = character.job }
 
                 if status == "on" then
                     if active_leo[source] then
-                        TriggerClientEvent('chatMessage', source, "[^3Dispatch^0] Your blips are already enabled!")
+                        TriggerClientEvent('chatMessage', source, "^*^5[System]: Blips are already enabled.")
                     else 
                         TriggerEvent("MxDev:ADDBLIP", player_info)
-                        TriggerClientEvent('chatMessage', source, "[^3Dispatch^0] You have enabled LEO blips!")
+                        TriggerClientEvent('chatMessage', source, "^*^5[System]: Enabled LEO blips.")
                     end
                 elseif status == "off" then
                     if not active_leo[source] then
-                        TriggerClientEvent('chatMessage', source, "[^3Dispatch^0] Your blips are already disabled!")
+                        TriggerClientEvent('chatMessage', source, "^*^5[System]: Blips are already disabled.")
                     else 
                         TriggerEvent("MxDev:REMOVEBLIP", source)
-                        TriggerClientEvent('chatMessage', source, "[^3Dispatch^0] You have disabled LEO blips!")
+                        TriggerClientEvent('chatMessage', source, "^*^5[System]: Disabled LEO blips.")
                     end
                 end
 
@@ -35,33 +41,36 @@ if Config.enable_blips then
             end
         end
 
-        TriggerClientEvent('chatMessage', source, "^1 Access Denied")
+        -- If the player's job doesn't match any department, show access denied
+        TriggerClientEvent('chatMessage', source, "^*^5[System]: Access Denied")
     end)
 end
 
+-- Remove the player's blip when they disconnect
 AddEventHandler("playerDropped", function()
     active_leo[source] = nil
 end)
 
+-- Register event to add a blip for a law enforcement officer
 RegisterNetEvent("MxDev:ADDBLIP")
 AddEventHandler("MxDev:ADDBLIP", function(player)
     active_leo[player.src] = player
-    --print(active_leo[src].dept)
     TriggerClientEvent("MxDev:TOGGLELEOBLIP", player.src, true)
 end)
 
+-- Register event to remove a blip for a law enforcement officer
 RegisterServerEvent("MxDev:REMOVEBLIP")
 AddEventHandler("MxDev:REMOVEBLIP", function(src)
     active_leo[src] = nil
     TriggerClientEvent("MxDev:TOGGLELEOBLIP", src, false)
 end)
 
+-- Continuously update blip positions
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(3000)
+        Citizen.Wait(2500)
         for id, info in pairs(active_leo) do
             leo_job = active_leo[id].dept
-            --print(leo_job)
             active_leo[id].coords = GetEntityCoords(GetPlayerPed(id))
             TriggerClientEvent("MxDev:UPDATEBLIPS", id, active_leo, leo_job)
         end
@@ -69,6 +78,7 @@ Citizen.CreateThread(function()
             local character = NDCore.Functions.GetPlayer(src)
             local jobMatches = false
             
+            -- Check if the player's job matches any department
             for department, _ in pairs(Config.departments) do
                 if character.job == department then
                     jobMatches = true
@@ -76,27 +86,10 @@ Citizen.CreateThread(function()
                 end
             end
             
+            -- If the player's job doesn't match any department, remove blip
             if not jobMatches then
                 TriggerEvent('MxDev:REMOVEBLIP', src)
             end
-        end
-    end
-end)
-
-RegisterNetEvent('MxDev:AUTOBLIP')
-AddEventHandler('MxDev:AUTOBLIP', function(source)
-    src = source
-    local character = NDCore.Functions.GetPlayer(src)
-    
-    for department, _ in pairs(Config.departments) do
-        if character.job == department and not active_leo[src] then
-            local player_info = { name = GetPlayerName(source), src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
-            TriggerEvent('MxDev:ADDBLIP', player_info)
-            break
-        elseif active_leo[src] and character.job ~= active_leo[src].dept then
-            local player_info = { name = GetPlayerName(source), src = source, dept = character.job, cname = NDCore.Functions.GetPlayer(src) }
-            TriggerEvent('MxDev:ADDBLIP', player_info)
-            break
         end
     end
 end)
